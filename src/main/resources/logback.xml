@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+    <!--<include
+    resource="org/springframework/boot/logging/logback/base.xml"
+    /> -->
+    <!--定义日志文件的存储地址和前缀名 -->
+    <property name="LOG_HOME" value="E:/project/log"/>
+    <property name="LOG_PREFIX" value="tools"/>
+    <!-- 一般信息按照每天生成日志文件 -->
+    <appender name="INFO_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${LOG_PREFIX}-info.log</File>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${LOG_HOME}/${LOG_PREFIX}-info-%d{yyyyMMdd}.log.%i</fileNamePattern>
+            <!-- 单个日志文件最多500MB, 30天的日志周期，最大不能超过20GB -->
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个
+            字符宽度%msg：日志消息，%n是换行符 -->
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level%logger{36}-%msg%n</Pattern>
+        </encoder>
+    </appender>
+    <!--错误信息按照每天生成日志文件 -->
+    <appender name="ERROR_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <File>${LOG_HOME}/${LOG_PREFIX}-error.log</File>
+        <!-- <rollingPolicy
+                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${LOG_HOME}/${LOG_PREFIX}-error-%d{yyyyMMdd}.log</fileNamePattern>
+            <!-- 单个日志文件最多500MB, 30天的日志周期，最大不能超过20GB -->
+            <maxHistory>0</maxHistory>
+
+        </rollingPolicy>
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个
+            字符宽度%msg：日志消息，%n是换行符 -->
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level%logger{36}-%msg%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个
+            字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level%logger{50} -%msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="TOOLS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${LOG_HOME}/tools-java.log</file>
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+        </encoder>
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${LOG_PREFIX}-java-%d{yyyy-MM-dd}.log</fileNamePattern>
+
+            <!--日志文件保留天数-->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <!-- 日志输出级别 这样设置不打印日志 -->
+    <root name="root" level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="INFO_FILE"/>-->
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+    <logger name="toolsRunning" level="INFO" additivity="false">
+        <appender-ref ref="TOOLS_FILE"/>
+    </logger>
+</configuration>

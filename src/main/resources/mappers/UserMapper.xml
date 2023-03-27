@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tools.dao.UserMapper">
+
+    <insert id="insertUserInfo" parameterType="com.example.tools.entity.User">
+        INSERT INTO user VALUES
+        (#{id,jdbcType=INTEGER},#{name,jdbcType=VARCHAR})
+    </insert>
+    <select id="selectAll" resultType="com.example.tools.entity.User">
+        select * from user limit 10
+    </select>
+    <select id="getByName" resultType="com.example.tools.entity.User">
+        select * from user where name = #{name}
+    </select>
+</mapper>
