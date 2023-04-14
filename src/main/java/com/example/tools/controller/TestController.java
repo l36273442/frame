@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.env.Environment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class TestController extends BaseController {
     @Autowired(required = false)
     private User user;
 
+    @Autowired
+    private Environment environment;
     @RequestMapping("test111")
     @ResponseBody
     public String test111() {
@@ -51,7 +54,7 @@ public class TestController extends BaseController {
 
         User user = new User();
         user.setId(1);
-        user.setName("yixin");
+        user.setName(environment.getProperty("aa"));
         user.setAccount("123");
 
         model.addAttribute("user", user);
