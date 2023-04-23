@@ -1,18 +1,15 @@
 package com.example.tools.utils;
 
 import com.alibaba.fastjson.JSON;
-import io.lettuce.core.tracing.TraceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -22,8 +19,8 @@ import java.util.LinkedHashMap;
 public class ToolsInterceptor implements HandlerInterceptor {
     Logger logRunning = LoggerFactory.getLogger("toolsRunning");
     private Long startTime;
-    @Resource
-    Environment environment;
+    //@Resource
+    //Environment environment;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -37,7 +34,7 @@ public class ToolsInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception{
         LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
         linkedHashMap.put("startTime", sdf2.format(startTime));
