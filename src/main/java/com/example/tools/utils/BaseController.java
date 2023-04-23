@@ -14,8 +14,8 @@ import java.util.HashMap;
 
 
 public class BaseController {
-    public HashMap<String, Object> h = new HashMap<>();
-    private Logger log = LoggerFactory.getLogger("root");
+    public Logger log = LoggerFactory.getLogger("root");
+
     /*
     @PreDestroy
     public void preDestroy(){
